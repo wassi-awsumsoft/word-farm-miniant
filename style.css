@@ -1,0 +1,180 @@
+html, body {
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	height: 100%;
+}
+
+body {
+	background: #000000;
+	color: white;
+}
+
+#miniant-participants {
+	position: fixed;
+	top: calc(var(--safe-top, 0px) + 8px);
+	left: calc(var(--safe-left, 0px) + 8px);
+	right: calc(var(--safe-right, 0px) + 8px);
+	z-index: 50;
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+	pointer-events: none;
+	font: 700 13px/1.2 Arial, sans-serif;
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+}
+
+#miniant-participants span {
+	max-width: 44%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding: 6px 8px;
+	border-radius: 8px;
+	background: rgba(0, 0, 0, 0.32);
+}
+
+#miniant-game-over,
+#miniant-spectator-view,
+#miniant-embed-error {
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	display: grid;
+	place-items: center;
+	padding:
+		calc(var(--safe-top, 0px) + 20px)
+		calc(var(--safe-right, 0px) + 20px)
+		calc(var(--safe-bottom, 0px) + 20px)
+		calc(var(--safe-left, 0px) + 20px);
+	background: rgba(0, 0, 0, 0.72);
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+}
+
+#miniant-game-over > div {
+	display: grid;
+	gap: 12px;
+	justify-items: center;
+}
+
+#miniant-game-over h1 {
+	margin: 0;
+	font-size: 28px;
+	line-height: 1.1;
+}
+
+#miniant-game-over button {
+	width: min(240px, 80vw);
+	min-height: 48px;
+	border: 0;
+	border-radius: 8px;
+	background: #ffe068;
+	color: #2d2200;
+	font: 700 18px/1 Arial, sans-serif;
+}
+
+html[data-input-disabled="true"] canvas,
+html[data-input-disabled="true"] .c3htmlwrap {
+	pointer-events: none !important;
+}
+
+html, body, canvas {
+	touch-action-delay: none;
+	touch-action: none;
+}
+
+canvas, .c3htmlwrap {
+	position: absolute;
+}
+
+.c3htmlwrap {
+	contain: strict;
+}
+
+.c3overlay {
+	pointer-events: none;
+}
+
+.c3htmlwrap[interactive] > * {
+	pointer-events: auto;
+}
+
+/* HACK - work around elements being selectable only in iOS WKWebView for some reason */
+html[ioswebview] .c3htmlwrap,
+html[ioswebview] canvas {
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+html[ioswebview] .c3htmlwrap > * {
+	-webkit-user-select: auto;
+	user-select: auto;
+}
+
+#notSupportedWrap {
+	margin: 2em auto 1em auto;
+	width: 75%;
+	max-width: 45em;
+	border: 2px solid #aaa;
+	border-radius: 1em;
+	padding: 2em;
+	background-color: #f0f0f0;
+	font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+	color: black;
+}
+
+#notSupportedTitle {
+	font-size: 1.8em;
+}
+
+.notSupportedMessage {
+	font-size: 1.2em;
+}
+
+.notSupportedMessage em {
+	color: #888;
+}
+
+/* bbcode styles */
+.bbCodeH1 {
+	font-size: 2em;
+	font-weight: bold;
+}
+
+.bbCodeH2 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.bbCodeH3 {
+	font-size: 1.25em;
+	font-weight: bold;
+}
+
+.bbCodeH4 {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.bbCodeItem::before {
+	content: " • ";
+}
+
+/* For text icons converted to HTML: size the height to the line height
+   preserving the aspect ratio. Also add position: relative as that allows
+   just adding a 'top' style for the iconoffsety style. */
+.c3-text-icon {
+	height: 1em;
+	width: auto;
+	position: relative;
+}
+
+/* screen reader text */
+.c3-screen-reader-text {
+	position: absolute;
+	width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+}

@@ -1,0 +1,17 @@
+{
+  "name": "word-farm-miniant",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MiniAnt-compatible package for the captured WordFarm web export.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "npx --yes http-server dist -a 127.0.0.1 -p 4192 -c-1"
+  },
+  "engines": {
+    "node": ">=20.20.2 <26"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
