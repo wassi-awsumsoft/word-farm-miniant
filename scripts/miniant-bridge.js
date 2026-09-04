@@ -93,14 +93,12 @@ function renderScoreHud() {
 	if (!hud) {
 		hud = document.createElement("div");
 		hud.id = "miniant-score-hud";
-		hud.innerHTML = '<span class="miniant-score-label">Score</span><strong class="miniant-score-value">0000</strong><span class="miniant-score-level">Level 1</span>';
-		 document.body.appendChild(hud);
+		hud.innerHTML = '<span class="miniant-score-label">Score</span><strong class="miniant-score-value">0000</strong>';
+		document.body.appendChild(hud);
 	}
 	hud.hidden = !state.scoreHudActive || state.spectator;
 	const value = hud.querySelector(".miniant-score-value");
-	const level = hud.querySelector(".miniant-score-level");
 	if (value) value.textContent = String(Math.max(0, state.score)).padStart(4, "0");
-	if (level) level.textContent = `Level ${Math.max(1, state.completedLevels + 1)}`;
 	positionScoreHud();
 	hud.classList.remove("is-updated");
 	void hud.offsetWidth;
@@ -134,7 +132,7 @@ function installScoreHudActivation() {
 		const x = (event.clientX - bounds.left) / bounds.width;
 		const y = (event.clientY - bounds.top) / bounds.height;
 		if (x >= 0.15 && x <= 0.85 && y >= 0.72 && y <= 0.98) {
-			window.setTimeout(activateScoreHud, 180);
+			window.setTimeout(activateScoreHud, 2500);
 		}
 	}, { capture: true });
 }
