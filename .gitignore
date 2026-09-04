@@ -1,6 +1,5 @@
 node_modules/
 .vercel/
-dist/
 *-smoke.png
 home-after-chapters.png
 play-after-chapters.png

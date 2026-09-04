@@ -1,0 +1,616 @@
+{
+	"level_unlock" : 0,
+	"chapter_unlock" : 1,
+	"fruit_key" : "",
+	"coin" : 200,
+	"booster_cost" : 20,
+	"bonus_level" : 5,
+	"chapters" : [
+		{
+			"name" : "Rice farm",
+			"key" : "rice",
+			"levels" : 30,
+			"bonus" : 100
+		},
+		{
+			"name" : "Apple farm",
+			"key" : "apple",
+			"levels" : 30,
+			"bonus" : 120
+		},
+		{
+			"name" : "Carrot farm",
+			"key" : "carrot",
+			"levels" : 30,
+			"bonus" : 120
+		},
+		{
+			"name" : "Orange farm",
+			"key" : "orange",
+			"levels" : 30,
+			"bonus" : 120
+		},
+		{
+			"name" : "Watermelon farm",
+			"key" : "watermelon",
+			"levels" : 30,
+			"bonus" : 150
+		},
+		{
+			"name" : "Lemon farm",
+			"key" : "lemon",
+			"levels" : 30,
+			"bonus" : 150
+		},
+		{
+			"name" : "Banana farm",
+			"key" : "banana",
+			"levels" : 30,
+			"bonus" : 150
+		},
+		{
+			"name" : "Cherry farm",
+			"key" : "cherry",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "Fig farm",
+			"key" : "fig",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "BlueBerry farm",
+			"key" : "blueberry",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "Mango farm",
+			"key" : "mango",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "Plum farm",
+			"key" : "plum",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "StrawBerry farm",
+			"key" : "strawberry",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "Gooseberry farm",
+			"key" : "gooseberry",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "Lime farm",
+			"key" : "lime",
+			"levels" : 30,
+			"bonus" : 160
+		},
+		{
+			"name" : "Guava farm",
+			"key" : "guava",
+			"levels" : 30,
+			"bonus" : 170
+		},
+		{
+			"name" : "Pear farm",
+			"key" : "pear",
+			"levels" : 30,
+			"bonus" : 170
+		},
+		{
+			"name" : "BlackBerry farm",
+			"key" : "blackberry",
+			"levels" : 30,
+			"bonus" : 170
+		},
+		{
+			"name" : "Peach farm",
+			"key" : "peach",
+			"levels" : 30,
+			"bonus" : 170
+		},
+		{
+			"name" : "Avocado farm",
+			"key" : "avocado",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Grape farm",
+			"key" : "grape",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "PineApple farm",
+			"key" : "pineapple",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Kiwi farm",
+			"key" : "kiwi",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Coconut farm",
+			"key" : "coconut",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "StarFruit farm",
+			"key" : "starfruit",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Squash farm",
+			"key" : "squash",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Beetroot farm",
+			"key" : "beetroot",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Pepper farm",
+			"key" : "pepper",
+			"levels" : 30,
+			"bonus" : 180
+		},
+		{
+			"name" : "Chili farm",
+			"key" : "chili",
+			"levels" : 30,
+			"bonus" : 190
+		},
+		{
+			"name" : "Ginger farm",
+			"key" : "ginger",
+			"levels" : 30,
+			"bonus" : 190
+		},
+		{
+			"name" : "Pumpkin farm",
+			"key" : "pumpkin",
+			"levels" : 30,
+			"bonus" : 190
+		},
+		{
+			"name" : "SweetPotato farm",
+			"key" : "sweet-potato",
+			"levels" : 30,
+			"bonus" : 200
+		},
+		{
+			"name" : "Turmeric farm",
+			"key" : "turmeric",
+			"levels" : 30,
+			"bonus" : 200
+		},
+		{
+			"name" : "Tamarind farm",
+			"key" : "tamarind",
+			"levels" : 30,
+			"bonus" : 200
+		},
+		{
+			"name" : "Sugar Cane",
+			"key" : "sugar-cane",
+			"levels" : 30,
+			"bonus" : 200
+		},
+		{
+			"name" : "Soursop farm",
+			"key" : "soursop",
+			"levels" : 30,
+			"bonus" : 200
+		},
+		{
+			"name" : "Sapodilla farm",
+			"key" : "sapodilla",
+			"levels" : 30,
+			"bonus" : 200
+		},
+		{
+			"name" : "Raspberry farm",
+			"key" : "raspberry",
+			"levels" : 30,
+			"bonus" : 210
+		},
+		{
+			"name" : "Rambutan farm",
+			"key" : "rambutan",
+			"levels" : 30,
+			"bonus" : 210
+		},
+		{
+			"name" : "Raisins farm",
+			"key" : "raisins",
+			"levels" : 30,
+			"bonus" : 210
+		},
+		{
+			"name" : "Pomelo farm",
+			"key" : "pomelo",
+			"levels" : 30,
+			"bonus" : 210
+		},
+		{
+			"name" : "Dragon Fruit",
+			"key" : "dragon-fruit",
+			"levels" : 30,
+			"bonus" : 210
+		},
+		{
+			"name" : "Pomegranate farm",
+			"key" : "pomegranate",
+			"levels" : 30,
+			"bonus" : 210
+		},
+		{
+			"name" : "Persimmon farm",
+			"key" : "persimmon",
+			"levels" : 30,
+			"bonus" : 220
+		},
+		{
+			"name" : "Olives farm",
+			"key" : "olives",
+			"levels" : 30,
+			"bonus" : 220
+		},
+		{
+			"name" : "Cabbage farm",
+			"key" : "Cabbage",
+			"levels" : 30,
+			"bonus" : 220
+		},
+		{
+			"name" : "Celery farm",
+			"key" : "Celery",
+			"levels" : 30,
+			"bonus" : 220
+		},
+		{
+			"name" : "Cauliflower farm",
+			"key" : "Cauliflower",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Fennel farm",
+			"key" : "Fennel",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Asparagus farm",
+			"key" : "Asparagus",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Broccoli farm",
+			"key" : "Broccoli",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Horseradish farm",
+			"key" : "Horseradish",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Lettuce farm",
+			"key" : "lettuce",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Green onion",
+			"key" : "Green onion",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Coriander Farm",
+			"key" : "Coriander",
+			"levels" : 30,
+			"bonus" : 230
+		},
+		{
+			"name" : "Herbs farm",
+			"key" : "Herbs",
+			"levels" : 30,
+			"bonus" : 240
+		},
+		{
+			"name" : "Perilla leaf",
+			"key" : "Perilla leaf",
+			"levels" : 30,
+			"bonus" : 240
+		},
+		{
+			"name" : "Seaweed farm",
+			"key" : "Seaweed",
+			"levels" : 30,
+			"bonus" : 240
+		},
+		{
+			"name" : "Spinach farm",
+			"key" : "spinach",
+			"levels" : 30,
+			"bonus" : 240
+		},
+		{
+			"name" : "Beans farm",
+			"key" : "beans",
+			"levels" : 30,
+			"bonus" : 240
+		},
+		{
+			"name" : "Poppy farm",
+			"key" : "poppy",
+			"levels" : 30,
+			"bonus" : 250
+		},
+		{
+			"name" : "Pansy farm",
+			"key" : "pansy",
+			"levels" : 30,
+			"bonus" : 250
+		},
+		{
+			"name" : "Violet farm",
+			"key" : "violet",
+			"levels" : 30,
+			"bonus" : 250
+		},
+		{
+			"name" : "Mimosa farm",
+			"key" : "mimosa",
+			"levels" : 30,
+			"bonus" : 250
+		},
+		{
+			"name" : "Lily farm",
+			"key" : "lily",
+			"levels" : 30,
+			"bonus" : 260
+		},
+		{
+			"name" : "Gladiolus farm",
+			"key" : "gladiolus",
+			"levels" : 30,
+			"bonus" : 260
+		},
+		{
+			"name" : "Forget me not",
+			"key" : "forget-me-not",
+			"levels" : 30,
+			"bonus" : 260
+		},
+		{
+			"name" : "Bougainvillea",
+			"key" : "bougainvillea",
+			"levels" : 30,
+			"bonus" : 260
+		},
+		{
+			"name" : "Cactus flower",
+			"key" : "cactus flower",
+			"levels" : 30,
+			"bonus" : 260
+		},
+		{
+			"name" : "Camellia farm",
+			"key" : "camellia",
+			"levels" : 30,
+			"bonus" : 270
+		},
+		{
+			"name" : "Chrysanthemum",
+			"key" : "chrysanthemum",
+			"levels" : 30,
+			"bonus" : 270
+		},
+		{
+			"name" : "Cockscomb farm",
+			"key" : "cockscomb",
+			"levels" : 30,
+			"bonus" : 270
+		},
+		{
+			"name" : "Daffodil farm",
+			"key" : "daffodil",
+			"levels" : 30,
+			"bonus" : 270
+		},
+		{
+			"name" : "Dahlia farm",
+			"key" : "dahlia",
+			"levels" : 30,
+			"bonus" : 270
+		},
+		{
+			"name" : "Flamboyant farm",
+			"key" : "flamboyant",
+			"levels" : 30,
+			"bonus" : 280
+		},
+		{
+			"name" : "Frangipani farm",
+			"key" : "frangipani",
+			"levels" : 30,
+			"bonus" : 280
+		},
+		{
+			"name" : "Gerbera farm",
+			"key" : "gerbera",
+			"levels" : 30,
+			"bonus" : 280
+		},
+		{
+			"name" : "Hibiscus farm",
+			"key" : "hibiscus",
+			"levels" : 30,
+			"bonus" : 280
+		},
+		{
+			"name" : "Jasmine farm",
+			"key" : "jasmine",
+			"levels" : 30,
+			"bonus" : 280
+		},
+		{
+			"name" : "Lavender farm",
+			"key" : "lavender",
+			"levels" : 30,
+			"bonus" : 290
+		},
+		{
+			"name" : "Lilac farm",
+			"key" : "lilac",
+			"levels" : 30,
+			"bonus" : 290
+		},
+		{
+			"name" : "Lotus farm",
+			"key" : "lotus",
+			"levels" : 30,
+			"bonus" : 290
+		},
+		{
+			"name" : "Magnolia farm",
+			"key" : "magnolia",
+			"levels" : 30,
+			"bonus" : 290
+		},
+		{
+			"name" : "Marigold farm",
+			"key" : "marigold",
+			"levels" : 30,
+			"bonus" : 290
+		},
+		{
+			"name" : "Tuberose farm",
+			"key" : "tuberose",
+			"levels" : 30,
+			"bonus" : 300
+		},
+		{
+			"name" : "Apricot blossom",
+			"key" : "apricot blossom",
+			"levels" : 30,
+			"bonus" : 300
+		},
+		{
+			"name" : "Cherry blossom",
+			"key" : "cherry blossom",
+			"levels" : 30,
+			"bonus" : 300
+		},
+		{
+			"name" : "Dandelion farm",
+			"key" : "dandelion",
+			"levels" : 30,
+			"bonus" : 300
+		},
+		{
+			"name" : "Moss rose",
+			"key" : "moss rose",
+			"levels" : 30,
+			"bonus" : 300
+		},
+		{
+			"name" : "Hydrangea farm",
+			"key" : "hydrangea",
+			"levels" : 30,
+			"bonus" : 300
+		},
+		{
+			"name" : "Daisy farm",
+			"key" : "daisy",
+			"levels" : 30,
+			"bonus" : 320
+		},
+		{
+			"name" : "Rose farm",
+			"key" : "rose",
+			"levels" : 30,
+			"bonus" : 320
+		},
+		{
+			"name" : "Narcissus farm",
+			"key" : "narcissus",
+			"levels" : 30,
+			"bonus" : 320
+		},
+		{
+			"name" : "Orchid farm",
+			"key" : "orchid",
+			"levels" : 30,
+			"bonus" : 320
+		},
+		{
+			"name" : "Tulip farm",
+			"key" : "tulip",
+			"levels" : 30,
+			"bonus" : 330
+		},
+		{
+			"name" : "Sunflower farm",
+			"key" : "sunflower",
+			"levels" : 30,
+			"bonus" : 330
+		},
+		{
+			"name" : "Cyclamen farm",
+			"key" : "cyclamen",
+			"levels" : 30,
+			"bonus" : 330
+		},
+		{
+			"name" : "Carnation farm",
+			"key" : "carnation",
+			"levels" : 30,
+			"bonus" : 350
+		},
+		{
+			"name" : "Petunia farm",
+			"key" : "petunia",
+			"levels" : 30,
+			"bonus" : 350
+		},
+		{
+			"name" : "Holly farm",
+			"key" : "holly",
+			"levels" : 30,
+			"bonus" : 350
+		},
+		{
+			"name" : "Iris farm",
+			"key" : "Iris",
+			"levels" : 30,
+			"bonus" : 350
+		}
+	]
+}
