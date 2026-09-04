@@ -71,6 +71,7 @@ function applyContext(context) {
 	applySafeArea(context.ui?.safeAreaInsets);
 	applySettings(context.settings);
 	renderParticipantStrip(context);
+	renderScoreHud();
 }
 
 function applyLoadedSave(save) {
@@ -83,6 +84,24 @@ function applyLoadedSave(save) {
 	state.completedLevels = Math.max(0, Number(save.completedLevels || state.score || 0));
 	if (save.constructStorageKey) state.constructStorageKey = String(save.constructStorageKey);
 	if (save.constructProgress && typeof save.constructProgress === "object") state.constructProgress = save.constructProgress;
+	renderScoreHud();
+}
+
+function renderScoreHud() {
+	let hud = document.getElementById("miniant-score-hud");
+	if (!hud) {
+		hud = document.createElement("div");
+		hud.id = "miniant-score-hud";
+		hud.innerHTML = '<span class="miniant-score-label">Score</span><strong class="miniant-score-value">0000</strong><span class="miniant-score-level">Level 1</span>';
+		document.body.appendChild(hud);
+	}
+	const value = hud.querySelector(".miniant-score-value");
+	const level = hud.querySelector(".miniant-score-level");
+	if (value) value.textContent = String(Math.max(0, state.score)).padStart(4, "0");
+	if (level) level.textContent = `Level ${Math.max(1, state.completedLevels + 1)}`;
+	hud.classList.remove("is-updated");
+	void hud.offsetWidth;
+	hud.classList.add("is-updated");
 }
 
 function applySafeArea(insets = {}) {
@@ -276,6 +295,7 @@ function trackConstructStorageValue(key, value) {
 	state.completedLevels = completedLevels;
 	state.score = completedLevels;
 	state.checkpoint = `chapter_${state.chapter}_level_${state.level}`;
+	renderScoreHud();
 
 	const progressKey = `${state.checkpoint}:${state.score}`;
 	if (progressKey !== state.lastProgressKey) {
@@ -393,6 +413,9 @@ function exposeBridgeApi() {
 		context: () => state.context,
 		setScore(score) {
 			state.score = Number(score) || 0;
+			renderScoreHud();
+			void reportProgress();
+			void saveProgress(true);
 			void publishSnapshot(true);
 		},
 		setCheckpoint(checkpoint) {

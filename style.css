@@ -10,6 +10,62 @@ body {
 	color: white;
 }
 
+@font-face {
+	font-family: "WordFarm";
+	src: url("fonts/Fredoka-Bold.ttf") format("truetype");
+	font-display: swap;
+}
+
+#miniant-score-hud {
+	position: fixed;
+	top: calc(var(--safe-top, 0px) + 12px);
+	left: 50%;
+	z-index: 60;
+	display: grid;
+	grid-template-columns: auto auto;
+	align-items: center;
+	column-gap: 8px;
+	width: min(178px, calc(100vw - 32px));
+	min-height: 44px;
+	padding: 4px 15px 5px;
+	box-sizing: border-box;
+	transform: translateX(-50%);
+	background: url("images/card_bar-sheet0.webp") center / 100% 100% no-repeat;
+	color: #ffffff;
+	font-family: "WordFarm", Arial, sans-serif;
+	line-height: 1;
+	pointer-events: none;
+	text-shadow: 0 2px 0 #193a62, 0 3px 4px rgba(0, 0, 0, 0.45);
+}
+
+.miniant-score-label {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0;
+}
+
+.miniant-score-value {
+	justify-self: end;
+	font-size: 21px;
+}
+
+.miniant-score-level {
+	grid-column: 1 / -1;
+	font-size: 10px;
+	text-align: center;
+	opacity: 0.9;
+}
+
+#miniant-score-hud.is-updated .miniant-score-value {
+	animation: miniant-score-bump 420ms ease-out;
+}
+
+@keyframes miniant-score-bump {
+	0% { transform: scale(1); }
+	45% { transform: scale(1.16); color: #fff3a3; }
+	100% { transform: scale(1); }
+}
+
 #miniant-participants {
 	position: fixed;
 	top: calc(var(--safe-top, 0px) + 8px);
