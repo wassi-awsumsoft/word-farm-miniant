@@ -2,6 +2,9 @@ const SDK_VERSION = 1;
 const HEARTBEAT_MS = 15000;
 const SAVE_MS = 30000;
 const SNAPSHOT_MS = 2000;
+const SCORE_VERSION = 2;
+const LEVEL_CLEAR_POINTS = 100;
+const LETTER_POINTS = 10;
 
 const state = {
 	context: null,
@@ -18,6 +21,10 @@ const state = {
 	chapter: 1,
 	level: 1,
 	completedLevels: 0,
+	scoredLevels: 0,
+	scoreVersion: 0,
+	scoreUpdatePromise: Promise.resolve(),
+	chapterScoreData: new Map(),
 	constructStorageKey: "",
 	constructProgress: null,
 	scoreHudActive: false,
@@ -78,11 +85,15 @@ function applyContext(context) {
 function applyLoadedSave(save) {
 	if (!save || typeof save !== "object") return;
 	state.loadedSave = save;
-	state.score = Number(save.score || 0);
+	state.scoreVersion = Number(save.scoreVersion || 0);
+	state.score = state.scoreVersion >= SCORE_VERSION ? Math.max(0, Number(save.score || 0)) : 0;
 	state.checkpoint = String(save.checkpoint || "boot");
 	state.chapter = Math.max(1, Number(save.chapter || 1));
 	state.level = Math.max(1, Number(save.level || 1));
-	state.completedLevels = Math.max(0, Number(save.completedLevels || state.score || 0));
+	state.completedLevels = Math.max(0, Number(save.completedLevels || 0));
+	state.scoredLevels = state.scoreVersion >= SCORE_VERSION
+		? Math.max(0, Number(save.scoredLevels ?? state.completedLevels))
+		: 0;
 	if (save.constructStorageKey) state.constructStorageKey = String(save.constructStorageKey);
 	if (save.constructProgress && typeof save.constructProgress === "object") state.constructProgress = save.constructProgress;
 	renderScoreHud();
@@ -232,6 +243,8 @@ function createSnapshot() {
 		chapter: state.chapter,
 		level: state.level,
 		completedLevels: state.completedLevels,
+		scoredLevels: state.scoredLevels,
+		scoreVersion: SCORE_VERSION,
 		elapsedMs: Date.now() - state.startedAt,
 		constructStorageKey: state.constructStorageKey,
 		constructProgress: state.constructProgress,
@@ -306,6 +319,62 @@ function findNumericKey(value, key) {
 	return null;
 }
 
+function decodeBase64Text(value) {
+	const binary = atob(String(value).replace(/\s/g, ""));
+	const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+	return new TextDecoder().decode(bytes);
+}
+
+async function getChapterScoreData(chapter) {
+	if (!state.chapterScoreData.has(chapter)) {
+		const request = fetch(`chapters/chapter${chapter}.txt`)
+			.then((response) => {
+				if (!response.ok) throw new Error(`Chapter ${chapter} could not be loaded`);
+				return response.text();
+			})
+			.then((encoded) => {
+				let decoded = encoded;
+				for (let pass = 0; pass < 3; pass += 1) decoded = decodeBase64Text(decoded);
+				const levels = JSON.parse(decoded);
+				return Array.isArray(levels) ? levels : [];
+			})
+			.catch(() => []);
+		state.chapterScoreData.set(chapter, request);
+	}
+	return state.chapterScoreData.get(chapter);
+}
+
+async function pointsForCompletedLevel(levelIndex) {
+	const chapter = Math.floor(levelIndex / 30) + 1;
+	const level = levelIndex % 30;
+	const levels = await getChapterScoreData(chapter);
+	const letters = String(levels[level]?.letters || "").replace(/[^A-Za-z]/g, "");
+	return LEVEL_CLEAR_POINTS + letters.length * LETTER_POINTS;
+}
+
+function syncPlatformProgress() {
+	const progressKey = `${state.checkpoint}:${state.score}`;
+	if (progressKey === state.lastProgressKey) return;
+	state.lastProgressKey = progressKey;
+	void reportProgress();
+	void saveProgress(true);
+	void publishSnapshot(true);
+}
+
+function reconcileScore() {
+	state.scoreUpdatePromise = state.scoreUpdatePromise.then(async () => {
+		while (state.scoredLevels < state.completedLevels) {
+			state.score += await pointsForCompletedLevel(state.scoredLevels);
+			state.scoredLevels += 1;
+		}
+		state.scoreVersion = SCORE_VERSION;
+		renderScoreHud();
+		syncPlatformProgress();
+		if (state.completedLevels >= 3000) window.WordFarmMiniAnt?.completeGame?.(state.score);
+	});
+	return state.scoreUpdatePromise;
+}
+
 function trackConstructStorageValue(key, value) {
 	if (!key || value == null) return;
 	const parsed = maybeJsonParse(value);
@@ -326,20 +395,9 @@ function trackConstructStorageValue(key, value) {
 	state.chapter = chapter;
 	state.level = levelUnlockIndex + 1;
 	state.completedLevels = completedLevels;
-	state.score = completedLevels;
 	state.checkpoint = `chapter_${state.chapter}_level_${state.level}`;
 	renderScoreHud();
-
-	const progressKey = `${state.checkpoint}:${state.score}`;
-	if (progressKey !== state.lastProgressKey) {
-		state.lastProgressKey = progressKey;
-		void reportProgress();
-		void saveProgress(true);
-		void publishSnapshot(true);
-	}
-	if (state.completedLevels >= 3000) {
-		window.WordFarmMiniAnt?.completeGame?.(state.score);
-	}
+	void reconcileScore();
 }
 
 async function buildRestoredConstructValue(existingValue) {
@@ -446,6 +504,7 @@ function exposeBridgeApi() {
 		context: () => state.context,
 		setScore(score) {
 			state.score = Number(score) || 0;
+			state.scoreVersion = SCORE_VERSION;
 			renderScoreHud();
 			void reportProgress();
 			void saveProgress(true);
