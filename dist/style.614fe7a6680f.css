@@ -18,16 +18,13 @@ body {
 
 #miniant-score-hud {
 	position: fixed;
-	top: calc(var(--safe-top, 0px) + 12px);
-	left: 50%;
 	z-index: 60;
 	display: grid;
 	grid-template-columns: auto auto;
 	align-items: center;
 	column-gap: 8px;
-	width: min(178px, calc(100vw - 32px));
-	min-height: 44px;
-	padding: 4px 15px 5px;
+	min-height: 34px;
+	padding: 3px 12px 4px;
 	box-sizing: border-box;
 	transform: translateX(-50%);
 	background: url("images/card_bar-sheet0.webp") center / 100% 100% no-repeat;
@@ -38,20 +35,24 @@ body {
 	text-shadow: 0 2px 0 #193a62, 0 3px 4px rgba(0, 0, 0, 0.45);
 }
 
+#miniant-score-hud[hidden] {
+	display: none;
+}
+
 .miniant-score-label {
-	font-size: 11px;
+	font-size: 10px;
 	text-transform: uppercase;
 	letter-spacing: 0;
 }
 
 .miniant-score-value {
 	justify-self: end;
-	font-size: 21px;
+	font-size: 18px;
 }
 
 .miniant-score-level {
 	grid-column: 1 / -1;
-	font-size: 10px;
+	font-size: 9px;
 	text-align: center;
 	opacity: 0.9;
 }

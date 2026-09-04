@@ -20,6 +20,7 @@ const state = {
 	completedLevels: 0,
 	constructStorageKey: "",
 	constructProgress: null,
+	scoreHudActive: false,
 	heartbeatTimer: 0,
 	saveTimer: 0,
 	snapshotTimer: 0,
@@ -93,15 +94,49 @@ function renderScoreHud() {
 		hud = document.createElement("div");
 		hud.id = "miniant-score-hud";
 		hud.innerHTML = '<span class="miniant-score-label">Score</span><strong class="miniant-score-value">0000</strong><span class="miniant-score-level">Level 1</span>';
-		document.body.appendChild(hud);
+		 document.body.appendChild(hud);
 	}
+	hud.hidden = !state.scoreHudActive || state.spectator;
 	const value = hud.querySelector(".miniant-score-value");
 	const level = hud.querySelector(".miniant-score-level");
 	if (value) value.textContent = String(Math.max(0, state.score)).padStart(4, "0");
 	if (level) level.textContent = `Level ${Math.max(1, state.completedLevels + 1)}`;
+	positionScoreHud();
 	hud.classList.remove("is-updated");
 	void hud.offsetWidth;
 	hud.classList.add("is-updated");
+}
+
+function positionScoreHud() {
+	const hud = document.getElementById("miniant-score-hud");
+	const canvas = window.c3canvas || document.querySelector("canvas");
+	if (!hud || !canvas) return;
+	const bounds = canvas.getBoundingClientRect();
+	if (!bounds.width || !bounds.height) return;
+	hud.style.left = `${bounds.left + bounds.width / 2}px`;
+	hud.style.top = `${bounds.top + bounds.height * 0.078}px`;
+	hud.style.width = `${Math.min(172, Math.max(138, bounds.width * 0.43))}px`;
+}
+
+function activateScoreHud() {
+	if (state.scoreHudActive || state.spectator) return;
+	state.scoreHudActive = true;
+	renderScoreHud();
+}
+
+function installScoreHudActivation() {
+	if (window.__miniantScoreHudListenerInstalled) return;
+	window.__miniantScoreHudListenerInstalled = true;
+	window.addEventListener("pointerdown", (event) => {
+		const canvas = window.c3canvas || document.querySelector("canvas");
+		if (!canvas) return;
+		const bounds = canvas.getBoundingClientRect();
+		const x = (event.clientX - bounds.left) / bounds.width;
+		const y = (event.clientY - bounds.top) / bounds.height;
+		if (x >= 0.15 && x <= 0.85 && y >= 0.72 && y <= 0.98) {
+			window.setTimeout(activateScoreHud, 180);
+		}
+	}, { capture: true });
 }
 
 function applySafeArea(insets = {}) {
@@ -457,6 +492,9 @@ async function startConstructGame() {
 	installConstructStorageBridge();
 	await import("./main.js");
 	await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+	installScoreHudActivation();
+	positionScoreHud();
+	window.addEventListener("resize", positionScoreHud);
 	if (state.spectator) stopConstructInput();
 	await state.miniant?.ready?.();
 	void publishSnapshot(true);
