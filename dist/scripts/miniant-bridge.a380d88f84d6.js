@@ -489,6 +489,7 @@ async function reportCompletedLevel(level) {
 		durationMs: Math.max(0, Date.now() - state.startedAt),
 		detail: { level },
 	}).catch(() => {});
+	showGameOver("completed");
 	return state.resultPromise;
 }
 
