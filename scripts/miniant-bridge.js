@@ -524,7 +524,6 @@ function showGameOver(outcome = "completed") {
 	exit.textContent = "Exit";
 	rematch.addEventListener("click", async () => {
 		await reportResult(outcome);
-		await discardSessionState();
 		await state.miniant?.requestRematch?.();
 	});
 	exit.addEventListener("click", async () => {
