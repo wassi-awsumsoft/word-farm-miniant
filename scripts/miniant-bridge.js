@@ -576,9 +576,8 @@ function wireMiniAntEvents() {
 	state.miniant.on?.("settings_changed", (settings) => {
 		applySettings(settings || {});
 	});
-	state.miniant.on?.("terminate", ({ reason } = {}) => {
-		if (reason !== "player_exit") void saveProgress(true);
-		else void discardSessionState();
+	state.miniant.on?.("terminate", () => {
+		void saveProgress(true);
 		terminateGame();
 	});
 	state.miniant.state?.onSaveRequest?.(() => createSnapshot());
