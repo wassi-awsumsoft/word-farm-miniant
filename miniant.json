@@ -2,6 +2,7 @@
   "sdkVersion": 1,
   "entry": "index.html",
   "orientation": "portrait",
+  "progression": "levels",
   "modes": [{ "id": "solo", "players": [1, 1] }],
   "capabilities": { "relay": false, "wallet": false, "saveState": true, "spectate": true }
 }

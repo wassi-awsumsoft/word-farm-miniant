@@ -33,6 +33,7 @@ const state = {
 	snapshotTimer: 0,
 	lastSnapshotHash: "",
 	lastProgressKey: "",
+	completedLevelsAtSessionStart: 0,
 	resultPromise: Promise.resolve(),
 };
 
@@ -91,6 +92,7 @@ function applyLoadedSave(save) {
 	state.chapter = Math.max(1, Number(save.chapter || 1));
 	state.level = Math.max(1, Number(save.level || 1));
 	state.completedLevels = Math.max(0, Number(save.completedLevels || 0));
+	state.completedLevelsAtSessionStart = state.completedLevels;
 	state.scoredLevels = state.scoreVersion >= SCORE_VERSION
 		? Math.max(0, Number(save.scoredLevels ?? state.completedLevels))
 		: 0;
@@ -394,10 +396,14 @@ function trackConstructStorageValue(key, value) {
 	};
 	state.chapter = chapter;
 	state.level = levelUnlockIndex + 1;
+	const previousCompletedLevels = state.completedLevels;
 	state.completedLevels = completedLevels;
 	state.checkpoint = `chapter_${state.chapter}_level_${state.level}`;
 	renderScoreHud();
 	void reconcileScore();
+	if (completedLevels > previousCompletedLevels && previousCompletedLevels >= state.completedLevelsAtSessionStart) {
+		void reportCompletedLevel(completedLevels);
+	}
 }
 
 async function buildRestoredConstructValue(existingValue) {
@@ -473,6 +479,19 @@ async function reportResult(outcome = "abandoned", extra = {}) {
 	return state.resultPromise;
 }
 
+async function reportCompletedLevel(level) {
+	if (state.resultReported || state.spectator || !state.miniant?.reportResult) return state.resultPromise;
+	await saveProgress(true);
+	state.resultReported = true;
+	state.resultPromise = state.miniant.reportResult({
+		outcome: "completed",
+		score: state.score,
+		durationMs: Math.max(0, Date.now() - state.startedAt),
+		detail: { level },
+	}).catch(() => {});
+	return state.resultPromise;
+}
+
 function showGameOver(outcome = "completed") {
 	if (document.getElementById("miniant-game-over")) return;
 	const overlay = document.createElement("div");
@@ -522,6 +541,7 @@ function exposeBridgeApi() {
 			void reportResult("completed");
 		},
 		reportResult,
+		reportCompletedLevel,
 		publishSnapshot,
 		renderFromSnapshot,
 	};
