@@ -26,6 +26,7 @@ const state = {
 	scoreUpdatePromise: Promise.resolve(),
 	chapterScoreData: new Map(),
 	constructStorageKey: "",
+	constructStorage: null,
 	constructProgress: null,
 	scoreHudActive: false,
 	heartbeatTimer: 0,
@@ -99,6 +100,18 @@ function applyLoadedSave(save) {
 	if (save.constructStorageKey) state.constructStorageKey = String(save.constructStorageKey);
 	if (save.constructProgress && typeof save.constructProgress === "object") state.constructProgress = save.constructProgress;
 	renderScoreHud();
+}
+
+async function discardSessionState() {
+	state.loadedSave = null;
+	state.score = 0;
+	state.checkpoint = "boot";
+	state.completedLevels = 0;
+	state.scoredLevels = 0;
+	state.constructProgress = null;
+	if (state.constructStorage && state.constructStorageKey) {
+		await state.constructStorage.removeItem(state.constructStorageKey).catch(() => {});
+	}
 }
 
 function renderScoreHud() {
@@ -433,10 +446,12 @@ function installConstructStorageBridge() {
 		const originalGetItem = acts.GetItem;
 		const originalCheckItemExists = acts.CheckItemExists;
 		acts.SetItem = async function patchedMiniAntSetItem(key, value) {
+			state.constructStorage = this._storage;
 			await originalSetItem.call(this, key, value);
 			trackConstructStorageValue(key, value);
 		};
 		acts.GetItem = async function patchedMiniAntGetItem(key) {
+			state.constructStorage = this._storage;
 			if (state.constructProgress && (!state.constructStorageKey || state.constructStorageKey === key)) {
 				const existing = await this._storage.getItem(key).catch(() => null);
 				const restored = await buildRestoredConstructValue(existing);
@@ -445,6 +460,7 @@ function installConstructStorageBridge() {
 			await originalGetItem.call(this, key);
 		};
 		acts.CheckItemExists = async function patchedMiniAntCheckItemExists(key) {
+			state.constructStorage = this._storage;
 			if (state.constructProgress && (!state.constructStorageKey || state.constructStorageKey === key)) {
 				const existing = await this._storage.getItem(key).catch(() => null);
 				const restored = await buildRestoredConstructValue(existing);
@@ -508,10 +524,12 @@ function showGameOver(outcome = "completed") {
 	exit.textContent = "Exit";
 	rematch.addEventListener("click", async () => {
 		await reportResult(outcome);
+		await discardSessionState();
 		await state.miniant?.requestRematch?.();
 	});
 	exit.addEventListener("click", async () => {
 		await reportResult("abandoned", { exit: true });
+		await discardSessionState();
 		state.miniant?.exit?.();
 	});
 	panel.append(title, rematch, exit);
@@ -561,6 +579,7 @@ function wireMiniAntEvents() {
 	});
 	state.miniant.on?.("terminate", ({ reason } = {}) => {
 		if (reason !== "player_exit") void saveProgress(true);
+		else void discardSessionState();
 		terminateGame();
 	});
 	state.miniant.state?.onSaveRequest?.(() => createSnapshot());
